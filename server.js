@@ -1,24 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.static('public'));
-
-// Quick startup log
-console.log('Starting Notes server...');
-
-// MongoDB connection
-mongoose.connect('mongodb+srv://johnsam05:1234@johndb.bcj0hff.mongodb.net/?retryWrites=true&w=majority&appName=JohnDB', {
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
+.then(() => console.log('Connected to MongoDB Atlas'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 const db = mongoose.connection;
 
@@ -36,8 +29,10 @@ db.once('open', () => {
 });
 
 // Test route
+const path = require('path');
+
 app.get('/', (req, res) => {
-  res.send('Server is running!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Note Schema
