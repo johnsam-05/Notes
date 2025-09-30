@@ -15,7 +15,7 @@ app.use(express.static('public'));
 console.log('Starting Notes server...');
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/notesDB', {
+mongoose.connect('mongodb+srv://johnsam05:1234@johndb.bcj0hff.mongodb.net/?retryWrites=true&w=majority&appName=JohnDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
