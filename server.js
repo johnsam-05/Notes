@@ -5,7 +5,13 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB Atlas
+// Middleware to parse JSON
+app.use(express.json());
+
+// Serve static front-end files
+app.use(express.static('public'));
+
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
